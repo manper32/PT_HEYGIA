@@ -1,0 +1,38 @@
+version: "3"
+services:
+#  Create a service named db.
+  db:
+#   Use the Docker Image postgres. This will pull the alpine release.
+    image: "postgres:14.15-alpine"
+#   Swap memory
+    shm_size: 4gb
+#   Give the container the name my_postgres. You can changes to something else.
+    container_name: "db_roulette"
+#   indicate how many connections will acept
+    # command: postgres -c 'max_connections=200000'
+#   Setup the username, password, and database name. You can changes these values.
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=GeygiaRoulette1234
+      - POSTGRES_DB=postgres
+#   Restart
+    # restart: always
+#   Maps port 54320 (localhost) to port 5432 on the container. You can change the ports to fix your needs.
+    ports:
+      - "5432:5432"
+#   Set a volume some that database is not lost after shutting down the container.
+#   I used the name postgres-data but you can changed it to something else.
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    # networks:
+    #   - NetworkPSQL
+
+# networks:
+#   NetworkPSQL:
+#     ipam:
+#       config:
+#         - subnet: 172.33.0.0/24
+
+volumes:
+  pg_data:
+    name: pg_data
